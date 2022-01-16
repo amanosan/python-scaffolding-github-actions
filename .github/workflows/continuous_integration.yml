@@ -1,0 +1,39 @@
+# basic workflow for getting started with Github Actions
+
+name: Continuous Integration
+
+# controlling when the workflow will run
+on: [push]# triggers the worflow push
+  
+    
+  # allows to run manually from the Actions tab
+  # workflow_dispath:
+
+# a wrokflow run is made of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7.x', '3.8.x', '3.9.x']
+    
+    # steps represent a sequence of taks that will execute as a part of the job
+    steps:
+      # checks-out the repository under $GITHUB_WORKSPACE, for job to access it
+      - uses: actions/checkout@v2
+
+      # The same version of python used
+      - name: Install Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{matrix.python-version}}
+
+      - name: Setup Dependencies
+        run: |
+          make insall
+      - name: Lint
+        run: | 
+          make lint
+      - name: Test
+        run: |
+          make test
