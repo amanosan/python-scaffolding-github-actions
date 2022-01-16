@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          make insall
+          make install
       - name: Lint
         run: |
           make lint
